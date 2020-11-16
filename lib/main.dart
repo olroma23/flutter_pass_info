@@ -4,9 +4,16 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(
       home: FirstScreen(),
-      routes: {
-        "/first": (context) => FirstScreen(),
-        "/second": (context) => SecondScreen(),
+      onGenerateRoute: (settings) {
+        User user = settings.arguments;
+        switch (settings.name) {
+          case "/":
+          return MaterialPageRoute(builder: (context) => FirstScreen());
+          break;
+          case "/second":
+          return MaterialPageRoute(builder: (context) => SecondScreen(user: user));
+          break;
+        }
       },
     ));
 
@@ -37,8 +44,6 @@ class SecondScreen extends StatelessWidget {
   SecondScreen({this.user});
   @override
   Widget build(BuildContext context) {
-    RouteSettings routeSettings = ModalRoute.of(context).settings;
-    user = routeSettings.arguments;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
